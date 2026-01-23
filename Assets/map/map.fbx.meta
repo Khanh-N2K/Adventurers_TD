@@ -1,9 +1,34 @@
 fileFormatVersion: 2
-guid: aa5d99e0fc685a74cb1a3b3099de0830
+guid: c4c15223c2089e24286381e5978941bf
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tree
+    second: {fileID: 2100000, guid: 28fa16ca83591a04aadd25725d16e87d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: build
+    second: {fileID: 2100000, guid: 20148ef41f9f7a24e82edb508643a5e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert3
+    second: {fileID: 2100000, guid: 520ff0313639f904a9e6febdabc94267, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert4
+    second: {fileID: 2100000, guid: 0a1196f9aad66854984b885ff2189fdc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: palm2_trunk
+    second: {fileID: 2100000, guid: 780e89baf5c01624ea455041840f51c3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
