@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: 0
   info:
-    id: 0
+    id: 1
     heath: 0
     damage: 0
     speed: 0
