@@ -2,23 +2,39 @@ using System;
 using UnityEngine;
 public class Base : MonoBehaviour
 {
+    [Header("Status")]
+
     public Status status;
+
+    [Header("Info")]
 
     public Info info;
     public int currenHeath;
+
+    [Header("Animator")]
+
     public Animator animator;
     public string idleAnimName = "idle";
     public string moveAnimName = "move";
     public string attackeAnimName = "attack";
+    public string dieAnimName = "die";
+
+    [Header("Target")]
 
     public Base target;
+
+    private void Awake()
+    {
+        SetUp();
+        //SwitchStatus(Status.Idle);
+    }
 
     public virtual void SetUp()
     {
         currenHeath = info.heath;
     }
 
-    public virtual void switchStatus(Status status)
+    public virtual void SwitchStatus(Status status)
     {
         this.status = status;
 
@@ -32,6 +48,9 @@ public class Base : MonoBehaviour
                 break;
             case Status.Attack:
                 HandleAttack();
+                break;
+            case Status.Die:
+                HandleDie();
                 break;
         }
     }
@@ -48,10 +67,15 @@ public class Base : MonoBehaviour
 
     public void PlayAnimation(string animName)
     {
-        animator.CrossFade(animName, 0.1f);
+        //animator.CrossFade(animName, 0.1f);
     }
 
     public void MoveTo(Vector3 targetPos)
+    {
+
+    }
+
+    protected virtual void StartAttack()
     {
 
     }
@@ -71,6 +95,11 @@ public class Base : MonoBehaviour
     public void HandleAttack()
     {
         PlayAnimation(attackeAnimName);
+    }
+
+    public void HandleDie()
+    {
+        PlayAnimation(dieAnimName);
     }
 
     #endregion ___

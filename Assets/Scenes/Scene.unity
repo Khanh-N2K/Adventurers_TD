@@ -1496,6 +1496,7 @@ MonoBehaviour:
   listCharacters: []
   characterTransform: {fileID: 2119798015}
   enemyTransform: {fileID: 459431970}
+  spawnSOData: {fileID: 0}
 --- !u!4 &1193342084
 Transform:
   m_ObjectHideFlags: 0
