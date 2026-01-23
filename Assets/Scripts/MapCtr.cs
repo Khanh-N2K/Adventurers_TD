@@ -9,5 +9,13 @@ public class MapCtr : Singleton<MapCtr>
     public List<Base> listCharacters = new();
     public Transform characterTransform;
     public Transform enemyTransform;
+    public bool CheckEndWave()
+    {
+        return true;
+    }
+    public void SpawnCharacter(int idx)
+    {
+        
+    }
 
 }
