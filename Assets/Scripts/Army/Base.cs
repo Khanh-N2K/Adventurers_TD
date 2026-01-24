@@ -367,7 +367,10 @@ public class Base : MonoBehaviour
     protected virtual void HandleDie()
     {
         if (isEnemy)
+        {
             MapCtr.Instance.listEnemys.Remove(this);
+            MapCtr.Instance.CheckEndWave();
+        }
         else
             MapCtr.Instance.listCharacters.Remove(this);
 
