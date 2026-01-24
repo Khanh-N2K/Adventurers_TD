@@ -1488,12 +1488,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab:
-  - {fileID: 1049792955854693553, guid: a99097df093a9c24192a2b7612465616, type: 3}
-  - {fileID: 1049792955854693553, guid: 34087907f965b054f9bc4c9cacf2cf16, type: 3}
+  - {fileID: 2720214513782960881, guid: a99097df093a9c24192a2b7612465616, type: 3}
+  - {fileID: 492767129465442263, guid: 34087907f965b054f9bc4c9cacf2cf16, type: 3}
   - {fileID: 1049792955854693553, guid: c9a6034a756907a479bda27d60568160, type: 3}
   characterPrefab:
-  - {fileID: 1049792955854693553, guid: a99097df093a9c24192a2b7612465616, type: 3}
-  - {fileID: 1049792955854693553, guid: 34087907f965b054f9bc4c9cacf2cf16, type: 3}
+  - {fileID: 2720214513782960881, guid: a99097df093a9c24192a2b7612465616, type: 3}
+  - {fileID: 492767129465442263, guid: 34087907f965b054f9bc4c9cacf2cf16, type: 3}
   - {fileID: 1049792955854693553, guid: c9a6034a756907a479bda27d60568160, type: 3}
   listEnemys: []
   listCharacters: []
@@ -2183,6 +2183,7 @@ MonoBehaviour:
   - {fileID: 217891584}
   - {fileID: 1529170771}
   - {fileID: 1887170276}
+  timeBounsCoin: 5
 --- !u!1 &1695419244
 GameObject:
   m_ObjectHideFlags: 0
