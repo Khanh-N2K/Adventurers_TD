@@ -24,7 +24,6 @@ public class UIInGame : Singleton<UIInGame>
             int idx = i;
             listCards[i].AddListener(() => SpawnCharacter(idx));
         }
-        DoStart(null);
     }
     public void DoStart(Action cb)
     {

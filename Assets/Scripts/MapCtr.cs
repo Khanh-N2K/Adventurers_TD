@@ -30,7 +30,7 @@ public class MapCtr : Singleton<MapCtr>
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemyWave(3));
+        UIInGame.Instance.DoStart(() => StartCoroutine(SpawnEnemyWave(3)));
     }
 
     void Update()
@@ -200,8 +200,8 @@ public class MapCtr : Singleton<MapCtr>
         foreach (var e in listEnemys)
             if (e.status != Status.Die) return false;
 
-        foreach (var c in listCharacters)
-            if (c.status != Status.Die) return false;
+        // foreach (var c in listCharacters)
+        //     if (c.status != Status.Die) return false;
 
         currentWave++;
         return true;
