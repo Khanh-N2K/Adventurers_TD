@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Base : MonoBehaviour
@@ -142,10 +143,10 @@ public class Base : MonoBehaviour
     protected virtual void HandleMove()
     {
         Vector3 destination = new Vector3(-0.65f, transform.position.y, transform.position.z);
-        StartCoroutine(MoveToIE(destination));
+        StartCoroutine(MoveToPositionIE(destination));
     }
 
-    private IEnumerator MoveToIE(Vector3 pos)
+    protected IEnumerator MoveToPositionIE(Vector3 pos)
     {
         PlayAnimation(moveAnimName);
 
@@ -171,29 +172,47 @@ public class Base : MonoBehaviour
             Vector3 direction = pos - transform.position;
             RotateTowardDirection(direction);
 
-            // Acquire target while moving
-            if (target == null)
-                target = GetClosestTarget();
-
-            // Switch to attack if close to target
-            if (target != null)
-            {
-                float dist = Vector3.Distance(
-                    transform.position,
-                    target.transform.position
-                );
-
-                if (dist <= stopDistance)
-                {
-                    SwitchStatus(Status.Attack);
-                    yield break;
-                }
-            }
-
             yield return null;
         }
 
         SwitchStatus(Status.Idle);
+    }
+
+    protected IEnumerator MoveToTargetIE(Vector3 targetPos, Action onFinished)
+    {
+        PlayAnimation(moveAnimName);
+
+        // Preserve Y position for planar movement
+        Vector3 destination = new Vector3(targetPos.x, transform.position.y, targetPos.z);
+
+        while (Vector3.Distance(transform.position, destination) > 0.01f)
+        {
+            // Check if has close target to attack
+            Base currentTarget = GetClosestTarget();
+            if (currentTarget != null && Vector3.SqrMagnitude(currentTarget.transform.position - transform.position) < info.range * info.range)
+            {
+                SetTarget(currentTarget);
+                yield return AttackTargetIE();
+                yield break;
+            }
+
+            // Move toward destination
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                destination,
+                info.speed * Time.deltaTime
+            );
+
+            // Rotate toward movement direction (Y axis only)
+            Vector3 direction = destination - transform.position;
+            RotateTowardDirection(direction);
+
+            yield return null;
+        }
+
+        // Snap exactly to target
+        transform.position = destination;
+        onFinished?.Invoke();
     }
 
     protected void RotateTowardDirection(Vector3 direction)
@@ -215,7 +234,6 @@ public class Base : MonoBehaviour
         }
     }
 
-    // Alternative: Rotate toward a specific target
     protected void RotateTowardTarget(Base targetBase)
     {
         if (targetBase == null) return;
@@ -239,30 +257,93 @@ public class Base : MonoBehaviour
         }
 
         // Enemy auto-move decision
-        if (isEnemy && Vector3.Distance(transform.position, new Vector3(-0.65f, transform.position.y, transform.position.z)) > 0.5f)
+        if (isEnemy)
         {
-            SwitchStatus(Status.Move);
+            if (Vector3.Distance(transform.position, new Vector3(-0.65f, transform.position.y, transform.position.z)) > 0.5f)
+            {
+                SwitchStatus(Status.Move);
+            }
         }
+        else
+        {
+            StartCoroutine(DelayAttackIE());
+        }
+    }
+
+    private IEnumerator DelayAttackIE()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SwitchStatus(Status.Attack);
     }
 
     protected virtual void HandleAttack()
     {
         PlayAnimation(attackAnimName);
+        FindTargetThenHandleAction();
+    }
 
-        // Keep rotating toward target during attack
-        if (target != null)
+    private void FindTargetThenHandleAction()
+    {
+        Base foundTarget = GetClosestTarget();
+        if (foundTarget == null)
         {
-            StartCoroutine(RotateTowardTargetCoroutine());
+            SwitchStatus(Status.Idle);
+        }
+        else
+        {
+            StartCoroutine(MoveToTargetIE(foundTarget.transform.position, onFinished: () => FindTargetThenHandleAction()));
         }
     }
 
-    private IEnumerator RotateTowardTargetCoroutine()
+    protected IEnumerator AttackTargetIE()
     {
-        while (status == Status.Attack && target != null)
+        while (target != null && target.currenHeath > 0)
         {
+            // Rotate toward target during attack
             RotateTowardTarget(target);
+
+            // Call the attack action (can be overridden for different attack types)
+            PerformAttackAction();
+
+            yield return new WaitForSeconds(info.attackDelay);
+
+            // Validate target still exists
+            if (!IsTargetValid())
+            {
+                target = null;
+                SwitchStatus(Status.Attack);
+                yield break;
+            }
+
+            // Deal damage
+            target.TakeDamage(info.damage);
+
             yield return null;
         }
+
+        // Target defeated, find next target
+        target = null;
+        SwitchStatus(Status.Attack);
+    }
+
+    protected bool IsTargetValid()
+    {
+        if (target == null || target.status == Status.Die)
+            return false;
+
+        if (isEnemy)
+            return MapCtr.Instance.listCharacters.Contains(target);
+        else
+            return MapCtr.Instance.listEnemys.Contains(target);
+    }
+
+    // Override this method in child classes for different attack animations/effects
+    protected virtual void PerformAttackAction()
+    {
+        PlayAnimation(attackAnimName);
+        // Child classes can add specific attack effects here
+        // e.g., MeleeNPC: sword swing effect
+        // e.g., ArcherNPC: shoot arrow projectile
     }
 
     protected virtual void HandleDie()

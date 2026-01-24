@@ -4,46 +4,19 @@ using UnityEngine;
 
 public class RangedNPC : Base
 {
-    protected override void HandleAttack()
+    [Header("Archer Settings")]
+    public GameObject arrowPrefab;
+    public Transform shootPoint;
+
+    protected override void PerformAttackAction()
     {
-        base.HandleAttack();
+        base.PerformAttackAction();
 
-        FindTargetThenHandleAction();
-    }
-
-    private void FindTargetThenHandleAction()
-    {
-        Base target = GetClosestTarget();
-
-        if (target == null)
+        // Shoot arrow projectile
+        if (target != null && arrowPrefab != null && shootPoint != null)
         {
-            SwitchStatus(Status.Idle);
-        }
-        else
-        {
-            SetTarget(target);
-            StartCoroutine(AttackCurrentTargetIE());
-        }
-    }
-
-    private IEnumerator AttackCurrentTargetIE()
-    {
-        while (target.currenHeath > 0)
-        {
-            yield return new WaitForSeconds(info.attackDelay);
-
-            if (target == null || target.status == Status.Die)
-            {
-                target = null;
-                SwitchStatus(Status.Attack);
-                yield break;
-            }
-            else
-            {
-                target.TakeDamage(info.damage);
-            }
-
-            yield return null;
+            GameObject arrow = Instantiate(arrowPrefab, shootPoint.position, shootPoint.rotation);
+            // Setup arrow to fly toward target
         }
     }
 }
