@@ -18,7 +18,7 @@ public class MapCtr : Singleton<MapCtr>
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemyWave(0));
+        StartCoroutine(SpawnEnemyWave(3));
     }
 
     void Update()
@@ -144,7 +144,7 @@ public class MapCtr : Singleton<MapCtr>
     public IEnumerator SpawnEnemyWave(int index)
     {
         InfoWave infoWave = spawnSOData.infoSpawn.infoWave[index];
-        yield return new WaitForSeconds(infoWave.timeDelay - 13f);
+        yield return new WaitForSeconds(infoWave.timeDelay );
         for (int i = 0; i < infoWave.infoTurns.Length; i++)
         {
             InfoTurn infoTurn = infoWave.infoTurns[i];
