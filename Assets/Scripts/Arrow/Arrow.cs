@@ -21,7 +21,11 @@ public class ArrowProjectile : MonoBehaviour
 
     void Update()
     {
-        if (target == null) return;
+        if (target == null)
+        {
+            HitTarget();
+            return;
+        }
 
         timer += Time.deltaTime;
         float t = timer / travelTime;
