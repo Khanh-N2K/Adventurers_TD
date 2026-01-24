@@ -120,7 +120,7 @@ public class MapCtr : Singleton<MapCtr>
     {
         for (int i = 0; i < enemyPrefab.Length; i++)
         {
-            if (enemyPrefab[i].info.id == id)
+            if (i == id)
             {
                 return enemyPrefab[i];
             }
@@ -132,7 +132,7 @@ public class MapCtr : Singleton<MapCtr>
     {
         for (int i = 0; i < characterPrefab.Length; i++)
         {
-            if (characterPrefab[i].info.id == id)
+            if (i == id)
             {
                 return characterPrefab[i];
             }
