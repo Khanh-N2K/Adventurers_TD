@@ -18,7 +18,7 @@ public class MapCtr : Singleton<MapCtr>
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemyWave(0));
+        StartCoroutine(SpawnEnemyWave(3));
     }
 
     void Update()
@@ -144,7 +144,7 @@ public class MapCtr : Singleton<MapCtr>
     public IEnumerator SpawnEnemyWave(int index)
     {
         InfoWave infoWave = spawnSOData.infoSpawn.infoWave[index];
-        yield return new WaitForSeconds(infoWave.timeDelay - 13f);
+        yield return new WaitForSeconds(infoWave.timeDelay );
         for (int i = 0; i < infoWave.infoTurns.Length; i++)
         {
             InfoTurn infoTurn = infoWave.infoTurns[i];
@@ -174,7 +174,7 @@ public class MapCtr : Singleton<MapCtr>
         Base Character = GetCharacterById(id);
         if (Character == null) return null;
         int idx = Random.Range(0, PosZ.Length);
-        Vector3 pos = new Vector3(-0.65f, 0.03f, PosZ[idx]);
+        Vector3 pos = new Vector3(-0.55f, 0.03f, PosZ[idx]);
         Base newCharacter = Instantiate(Character, parent);
         newCharacter.transform.position = pos;
         newCharacter.transform.rotation = Quaternion.identity;
