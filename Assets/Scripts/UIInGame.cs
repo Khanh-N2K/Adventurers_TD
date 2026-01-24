@@ -16,6 +16,7 @@ public class UIInGame : Singleton<UIInGame>
     public RectTransform DichRect;
     public RectTransform QuanRect;
     public CanvasGroup canvasGroup;
+    public bool IsStart;
     public void Start()
     {
         coinTxt.text = Coin.ToString();
@@ -27,6 +28,7 @@ public class UIInGame : Singleton<UIInGame>
     }
     public void DoStart(Action cb)
     {
+        IsStart = false;
         VsRect.DOAnchorPosY(0, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             DichRect.DOAnchorPosX(0, 0.5f).SetDelay(0.1f).SetEase(Ease.InOutBack);
@@ -35,6 +37,7 @@ public class UIInGame : Singleton<UIInGame>
                 canvasGroup.DOFade(0, 0.5f).SetDelay(0.25f).OnComplete(() =>
                 {
                     cb?.Invoke();
+                    IsStart = true;
                 });
             });
         });

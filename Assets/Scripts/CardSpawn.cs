@@ -28,6 +28,7 @@ public class CardSpawn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void OnClick()
     {
+        if (!UIInGame.Instance.IsStart) return;
         if (!isClick || !isCoin) return;
         isClick = false;
         btn.enabled = false;
@@ -52,12 +53,14 @@ public class CardSpawn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!UIInGame.Instance.IsStart) return;
         if (!isClick || !isCoin) return;
         isPointerDown = true;
         transform.DOScale(endScale, 0.1f).SetEase(Ease.Linear).SetUpdate(true).SetId(this);
     }
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (!UIInGame.Instance.IsStart) return;
         if (!isClick || !isCoin) return;
         if (!isPointerDown) return;
         isPointerDown = false;
