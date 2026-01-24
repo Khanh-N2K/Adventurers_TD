@@ -112,7 +112,7 @@ public class MapCtr : Singleton<MapCtr>
     public void SpawnCharacter(int id)
     {
         Base Character = CreateCharacterObject(id, characterTransform);
-        if (Character = null) return;
+        if (Character == null) return;
         listCharacters.Add(Character);
     }
 
@@ -185,11 +185,11 @@ public class MapCtr : Singleton<MapCtr>
     [ContextMenu("Test All Attack")]
     private void TestAllAttack()
     {
-        foreach(var enemy in listEnemys)
+        foreach (var enemy in listEnemys)
         {
             enemy.SwitchStatus(Status.Attack);
         }
-        foreach(var character in listCharacters)
+        foreach (var character in listCharacters)
         {
             character.SwitchStatus(Status.Attack);
         }

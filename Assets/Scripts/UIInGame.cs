@@ -16,7 +16,8 @@ public class UIInGame : Singleton<UIInGame>
         coinTxt.text = Coin.ToString();
         for (int i = 0; i < listCards.Length; i++)
         {
-            listCards[i].AddListener(() => SpawnCharacter(i));
+            int idx = i;
+            listCards[i].AddListener(() => SpawnCharacter(idx));
         }
     }
     public void Update()
