@@ -5,8 +5,10 @@ public class ArrowProjectile : MonoBehaviour
     public float speed = 15f;
     public float arcHeight;
 
-    private Transform target;
     private Vector3 startPos;
+    private Vector3 lastPos;
+    private Transform target;
+
     private float travelTime;
     private float timer;
 
@@ -14,6 +16,7 @@ public class ArrowProjectile : MonoBehaviour
     {
         this.target = target;
         startPos = transform.position;
+        lastPos = startPos;
 
         float distance = Vector3.Distance(startPos, target.position);
         travelTime = distance / speed;
@@ -44,9 +47,13 @@ public class ArrowProjectile : MonoBehaviour
 
         transform.position = currentPos;
 
-        // xoay mũi tên theo hướng bay
-        Vector3 dir = (target.position - transform.position).normalized;
-        transform.rotation = Quaternion.LookRotation(dir);
+        // rotate theo hướng di chuyển
+        Vector3 velocity = (currentPos - lastPos) / Time.deltaTime;
+        if (velocity.sqrMagnitude > 0.0001f)
+        {
+            transform.rotation = Quaternion.LookRotation(velocity);
+        }
+        lastPos = currentPos;
     }
 
     void HitTarget()
