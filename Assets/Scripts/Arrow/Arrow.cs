@@ -3,7 +3,7 @@ using UnityEngine;
 public class ArrowProjectile : MonoBehaviour
 {
     public float speed = 15f;
-    public float arcHeight = 2f;
+    public float arcHeight;
 
     private Transform target;
     private Vector3 startPos;
@@ -39,6 +39,7 @@ public class ArrowProjectile : MonoBehaviour
         Vector3 currentPos = Vector3.Lerp(startPos, target.position, t);
 
         // tạo đường cong
+        arcHeight = Vector3.Distance(startPos, target.position) * 1.5f;
         currentPos.y += arcHeight * Mathf.Sin(Mathf.PI * t) * 0.1f;
 
         transform.position = currentPos;
