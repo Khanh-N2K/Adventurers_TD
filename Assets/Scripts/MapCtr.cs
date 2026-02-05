@@ -21,7 +21,7 @@ public class MapCtr : Singleton<MapCtr>
     [SerializeField] private int maxPerRow = 5;
     [SerializeField] private float spacingZ = 0.03f;
     [SerializeField] private float spacingX = 0.08f;
-    [SerializeField] private float enemyStartX = 1f;
+    [SerializeField] private float enemyStartX = 0.4f;
     [SerializeField] private float characterStartX = -0.55f;
     [SerializeField] private float posY = 0.03f;
 
@@ -54,6 +54,7 @@ public class MapCtr : Singleton<MapCtr>
 
         foreach (var enemy in listEnemys)
         {
+            if (enemy == null) continue;
             if (enemy.status == Status.Die) continue;
 
             float dis = Vector3.SqrMagnitude(enemy.transform.position - root);
@@ -73,6 +74,7 @@ public class MapCtr : Singleton<MapCtr>
 
         foreach (var character in listCharacters)
         {
+            if (character == null) continue;
             if (character.status == Status.Die) continue;
 
             float dis = Vector3.SqrMagnitude(character.transform.position - root);
@@ -194,13 +196,16 @@ public class MapCtr : Singleton<MapCtr>
     public bool CheckEndWave()
     {
         foreach (var e in listEnemys)
+        {
+            if (e == null) return false;
             if (e.status != Status.Die) return false;
+        }
 
         // foreach (var c in listCharacters)
         //     if (c.status != Status.Die) return false;
 
         currentWave++;
-        if(currentWave > 3) return false;
+        if (currentWave > 3) return false;
         StopAllCoroutines();
         StartCoroutine(SpawnEnemyWave(currentWave));
 

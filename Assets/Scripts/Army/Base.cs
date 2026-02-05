@@ -18,7 +18,7 @@ public class Base : MonoBehaviour
     public Info info;
     public int currenHeath;
     public int maxHealth;
-
+    public SpriteRenderer fill;
     #endregion
 
     #region ___ ANIMATOR ___
@@ -98,7 +98,7 @@ public class Base : MonoBehaviour
         if (status == Status.Die) return;
 
         currenHeath -= damage;
-
+        FillSprite((float)currenHeath / info.heath, 0.01f, true);
         if (currenHeath <= 0)
         {
             currenHeath = 0;
@@ -369,8 +369,9 @@ public class Base : MonoBehaviour
     {
         if (isEnemy)
         {
-             MapCtr.Instance.listEnemys.Remove(this);
+            MapCtr.Instance.listEnemys.Remove(this);
             MapCtr.Instance.CheckEndWave();
+            UIInGame.Instance.AddCoin(5);
         }
         else
             MapCtr.Instance.listCharacters.Remove(this);
@@ -383,6 +384,22 @@ public class Base : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    public void FillSprite(float percent, float fullScaleX, bool anchorLeft = true)
+    {
+        if (fill == null) return;
+        percent = Mathf.Clamp01(percent);
 
+        Vector3 scale = fill.transform.localScale;
+        scale.x = fullScaleX * percent;
+        fill.transform.localScale = scale;
+
+        if (anchorLeft)
+        {
+            float offset = (fullScaleX - scale.x) * 0.5f;
+            Vector3 pos = fill.transform.localPosition;
+            pos.x = -offset;
+            fill.transform.localPosition = pos;
+        }
+    }
     #endregion
 }

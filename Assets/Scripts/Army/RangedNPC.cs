@@ -8,24 +8,24 @@ public class RangedNPC : Base
     public GameObject arrowPrefab;
     public Transform shootPoint;
 
-        protected override void PerformAttackAction()
+    protected override void PerformAttackAction()
+    {
+        base.PerformAttackAction();
+
+        if (target != null && arrowPrefab != null && shootPoint != null)
         {
-            base.PerformAttackAction();
+            GameObject arrow = Instantiate(
+                arrowPrefab,
+                shootPoint.position,
+                shootPoint.rotation
+            );
 
-            if (target != null && arrowPrefab != null && shootPoint != null)
-            {
-                GameObject arrow = Instantiate(
-                    arrowPrefab,
-                    shootPoint.position,
-                    shootPoint.rotation
-                );
-
-                // ArrowProjectile projectile = arrow.GetComponent<ArrowProjectile>();
-                // if (projectile != null)
-                // {
-                //     projectile.Init(target.transform);
-                // }
-            }
+            // ArrowProjectile projectile = arrow.GetComponent<ArrowProjectile>();
+            // if (projectile != null)
+            // {
+            //     projectile.Init(target.transform);
+            // }
         }
+    }
 
 }

@@ -16,12 +16,15 @@ public class CardSpawn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public Image fill;
     public int coin;
     public Text text;
+    public Text countTxt;
     public Action onClick;
     private bool isCoin;
     public void Start()
     {
         isClick = true;
         fill.fillAmount = 0;
+        countTxt.text = "0";
+        countTxt.gameObject.SetActive(false);
         text.text = coin.ToString();
         btn.onClick.AddListener(OnClick);
         isCoin = coin <= UIInGame.Instance.Coin;
@@ -34,13 +37,29 @@ public class CardSpawn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         btn.enabled = false;
         onClick?.Invoke();
         fill.fillAmount = 1;
-        fill.DOFillAmount(0, countdown).OnComplete(() =>
-        {
-            isClick = true;
-            btn.enabled = true;
-            fill.fillAmount = 0;
-        });
+        StartCountdown(countdown);
         UIInGame.Instance.RemoveCoin(coin);
+    }
+    public void StartCountdown(float duration)
+    {
+        countTxt.text = duration.ToString();
+        float valChange = duration;
+        countTxt.gameObject.SetActive(true);
+        DOTween.To(() => valChange, x => valChange = x, 0, duration).SetEase(Ease.Linear)
+            .OnUpdate(() =>
+            {
+                countTxt.text = ((int)valChange).ToString();
+                fill.fillAmount = valChange / duration;
+            })
+            .OnComplete(() =>
+            {
+                isClick = true;
+                btn.enabled = true;
+                fill.fillAmount = 0;
+                countTxt.text = "0";
+                countTxt.gameObject.SetActive(false);
+                Debug.Log("⏰ Countdown finished");
+            }).SetId(this);
     }
     public void CheckClickButton()
     {
