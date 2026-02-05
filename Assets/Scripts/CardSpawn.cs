@@ -48,7 +48,7 @@ public class CardSpawn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         DOTween.To(() => valChange, x => valChange = x, 0, duration).SetEase(Ease.Linear)
             .OnUpdate(() =>
             {
-                countTxt.text = ((int)valChange).ToString();
+                countTxt.text = Mathf.CeilToInt(valChange).ToString();
                 fill.fillAmount = valChange / duration;
             })
             .OnComplete(() =>

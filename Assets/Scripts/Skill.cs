@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class Skill : MonoBehaviour
     public bool isSkill;
     private void Awake()
     {
-        isSkill = true;
+        isSkill = false;
         fill.fillAmount = 0;
         text.text = "0";
         text.gameObject.SetActive(false);
@@ -26,11 +27,13 @@ public class Skill : MonoBehaviour
     }
     private void OnSkill()
     {
-        if (!isSkill) return;
+        if (isSkill) return;
         spawnIndex = 0;
+        isSkill = true;
+        btn.enabled = false;
         skillTransform.position = new Vector3(-1, 0, 0);
         List<Transform> prefabs = new List<Transform>();
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 15; i++)
         {
             Transform newPrefab = Instantiate(skillPrefab, GetSpawnPos(), Quaternion.identity);
             newPrefab.transform.SetParent(skillTransform, false);
@@ -43,7 +46,7 @@ public class Skill : MonoBehaviour
         {
             float posX = s.position.x;
 
-            s.DOMoveX(posX + 3f, 10f)
+            s.DOMoveX(posX + 5f, 10f)
                 .SetEase(Ease.Linear)
                 .OnUpdate(() =>
                 {
@@ -64,7 +67,7 @@ public class Skill : MonoBehaviour
                     Destroy(s.gameObject);
                 });
         }
-        StartCountdown(5);
+        StartCountdown(25);
     }
     private Vector3 GetSpawnPos()
     {
@@ -85,12 +88,12 @@ public class Skill : MonoBehaviour
         DOTween.To(() => valChange, x => valChange = x, 0, duration).SetEase(Ease.Linear)
             .OnUpdate(() =>
             {
-                text.text = ((int)valChange).ToString();
+                text.text = Mathf.CeilToInt(valChange).ToString();
                 fill.fillAmount = valChange / duration;
             })
             .OnComplete(() =>
             {
-                isSkill = true;
+                isSkill = false;
                 btn.enabled = true;
                 fill.fillAmount = 0;
                 text.text = "0";

@@ -1079,7 +1079,7 @@ RectTransform:
   m_GameObject: {fileID: 630885981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 932634664}
@@ -1113,10 +1113,10 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 1
+  m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &630885984
@@ -1748,9 +1748,9 @@ MonoBehaviour:
   skillPrefab: {fileID: 806371544709234526, guid: 4194f7ead024f0b4991d157aa2ccc16d, type: 3}
   skillTransform: {fileID: 1844612969}
   maxPerRow: 5
-  spacingZ: 0.03
-  spacingX: 0.08
-  posY: 0.03
+  spacingZ: 0.075
+  spacingX: 0.075
+  posY: 0.025
   isSkill: 0
 --- !u!1 &963194225
 GameObject:
@@ -2199,9 +2199,9 @@ MonoBehaviour:
   enemyTransform: {fileID: 459431970}
   spawnSOData: {fileID: 11400000, guid: f5ae668c031eaf545ba79369f1f261f5, type: 2}
   maxPerRow: 5
-  spacingZ: 0.03
-  spacingX: 0.08
-  enemyStartX: 0.4
+  spacingZ: 0.05
+  spacingX: 0.05
+  enemyStartX: 0.25
   characterStartX: -0.55
   posY: 0.03
 --- !u!4 &1193342084
