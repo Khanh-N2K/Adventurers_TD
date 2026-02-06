@@ -1747,10 +1747,10 @@ MonoBehaviour:
   text: {fileID: 2121083996}
   skillPrefab: {fileID: 806371544709234526, guid: 4194f7ead024f0b4991d157aa2ccc16d, type: 3}
   skillTransform: {fileID: 1844612969}
-  maxPerRow: 5
-  spacingZ: 0.075
-  spacingX: 0.075
-  posY: 0.025
+  maxPerRow: 3
+  spacingZ: 0.15
+  spacingX: 0.3
+  posY: 0.05
   isSkill: 0
 --- !u!1 &963194225
 GameObject:
