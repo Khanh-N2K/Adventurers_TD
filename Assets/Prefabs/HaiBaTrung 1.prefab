@@ -84,7 +84,7 @@ MonoBehaviour:
   info:
     id: 0
     heath: 100
-    damage: 2
+    damage: 20
     speed: 2
     attackDelay: 0.2
     range: 100
